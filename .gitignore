@@ -32,3 +32,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+ShurikenMaster/Logs
+ShurikenMaster/Packages/packages-lock.json
