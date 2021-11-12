@@ -50,7 +50,7 @@
 	}
 	SubShader
 	{
-		Tags { "RenderType"="Transparent" "LightMode"="ForwardBase" }
+		Tags { "RenderType"="Transparent" "LightMode"="ForwardBase" "RenderPipeline" = "UniversalPipeline" }
 
 		LOD 100
 
@@ -61,7 +61,7 @@
 			Blend [_SrcBlend] [_DstBlend]
 			ZWrite [_ZWrite]
 
-			CGPROGRAM
+			HLSLPROGRAM
 			#pragma target 3.0
 
 			#pragma vertex vert
@@ -81,10 +81,7 @@
 			#pragma shader_feature _ VFX_FLIPBOOKBLEND
 			#pragma shader_feature _ VFX_FLIPBOOKBLEND_OFLOW
 
-			#include "UnityCG.cginc"
-			#include "Lighting.cginc"
-			#include "AutoLight.cginc"
-			#include "UnityStandardUtils.cginc"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "ShurikenMaster.cginc"
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +140,7 @@
 			// FRAGMENT SHADER
 			/////////////////////////////////////////////////////////////////////////////////		
 
-			fixed4 frag (v2f i) : SV_Target
+			float4 frag (v2f i) : SV_Target
 			{
 
 				float fade = SKM_COMPUTE_PARTICLE_FADING;
@@ -182,7 +179,7 @@
 
 				return col; 
 			}
-			ENDCG 
+			ENDHLSL
 		}
 	}
 	CustomEditor "ShurikenMasterGUI"	

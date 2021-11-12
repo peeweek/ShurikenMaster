@@ -26,14 +26,14 @@
 // UNIFORMS
 /////////////////////////////////////////////////////////////////////////////////
 
-UNITY_DECLARE_TEX2D(_MainTex);
+TEXTURE2D_X(_MainTex);
 int _BlendMode;
 
 int _PremultiplyRGBbyA;
 float _Brightness;
 
 #ifdef COLORSOURCE_ALTERNATEALPHA
-UNITY_DECLARE_TEX2D(_AlphaTex);
+TEXTURE2D_X(_AlphaTex);
 #endif
 
 #ifdef SKM_REQUIRE_ZBUFFER
@@ -51,11 +51,11 @@ float _Cutoff;
 #endif
 
 #ifdef VFX_USENORMALMAP
-UNITY_DECLARE_TEX2D(_NormalMap);
+TEXTURE2D_X(_NormalMap);
 #endif
 
 #ifdef VFX_FLIPBOOKBLEND_OFLOW
-UNITY_DECLARE_TEX2D(_OFlowMap);
+TEXTURE2D_X(_OFlowMap);
 float _OFlowMorphIntensity;
 #endif
 
@@ -67,7 +67,7 @@ float _OFlowMorphIntensity;
 #define SKM_V2F_DECLARE_POSITION float4 vertex : SV_POSITION;
 #define SKM_VS_SETUP_POSITION o.vertex = UnityObjectToClipPos(v.vertex);
 
-#define SKM_V_DECLARE_COLOR fixed4 color : COLOR;
+#define SKM_V_DECLARE_COLOR half4 color : COLOR;
 #define SKM_V2F_DECLARE_COLOR half4 color : COLOR;
 #define SKM_VS_SETUP_COLOR o.color = v.color;
 
@@ -264,20 +264,20 @@ float _OFlowMorphIntensity;
 
 #define SKM_FOG_COLOR(opacity) SKM_GetFogColor(opacity)
 
-fixed4 SKM_GetFogColor(float opacity)
+float4 SKM_GetFogColor(float opacity)
 {
-	fixed4 fogColor = unity_FogColor;
+	float4 fogColor = unity_FogColor;
 
 	switch((int)_BlendMode)
 	{					
 		case 2:	//	Additive = 2		
-			fogColor = fixed4(0,0,0,0); // fog towards black due to our blend mode
+			fogColor = float4(0,0,0,0); // fog towards black due to our blend mode
 			break;					
 		case 3: //	Premultiplied = 3
 			fogColor =  unity_FogColor * opacity;
 			break;
 		case 5:	//	Modulate = 5				
-			fogColor = fixed4(0,0,0,0);				
+			fogColor = float4(0,0,0,0);
 			break;																							
 	}
 
